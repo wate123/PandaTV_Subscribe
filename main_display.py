@@ -15,7 +15,7 @@ class MainDisplay:
         self.root = Tk()
 
         ###########################     设置初始windows位置 ##################
-        self.root.geometry('220x45+40+560')         # 长 X  宽  + 向右平移 + 向下平移
+        self.root.geometry('220x55+40+560')         # 长 X  宽  + 向右平移 + 向下平移
         #####################################################################
 
         self.root.title('就是要莽')
@@ -40,10 +40,10 @@ class MainDisplay:
         bottom_frame.pack(fill=BOTH, side=BOTTOM)
         refresh_button = Button(bottom_frame, text='手动刷新',font="25")
         refresh_button.bind('<Button-1>', self.refresh)
-        refresh_button.grid(row=0,column=0,sticky=("N", "S", "E", "W"))
+        refresh_button.grid(row=0,column=0,sticky=("N", "S", "E", "W"),padx=4,pady=4)
         fans_button=Button(bottom_frame,text='当前订阅',font="25")
         fans_button.bind('<Button-1>', self.refresh_total_fans)
-        fans_button.grid(row=0,column=1,sticky=("N", "S", "E", "W"))
+        fans_button.grid(row=0,column=1,sticky=("N", "S", "E", "W"),padx=4,pady=4)
         bottom_frame.columnconfigure(0,weight=1)
         bottom_frame.columnconfigure(1,weight=1)
         self.root.rowconfigure(0,weight=3)   # 调整widget位置
