@@ -2,6 +2,7 @@ from tkinter import *
 from crawl import Crawl
 import threading
 import time
+import winsound
 
 class MainDisplay:
 
@@ -10,6 +11,7 @@ class MainDisplay:
             time = 刷新时间 （分钟）'''
         self.goal = goal
         self.time_in_seconds = time*60
+        self.today_maximum = -1 # 今日最高订阅数
         self.c = Crawl(goal)      # 初始化Crawler
         # 设置GUI界面
         self.root = Tk()
@@ -55,10 +57,17 @@ class MainDisplay:
         self.root.mainloop()
 
     def print_fans(self):
-        self.cur_num.set(self.c.get_incresed_fans())
+        increased_fans = self.c.get_incresed_fans()
+        if increased_fans > self.today_maximum:     # 当订阅人数增加时，播放hello音效
+            threading.Thread(target=self.play_sound).start()
+            self.today_maximum = increased_fans
+        self.cur_num.set(increased_fans)
         self.label_text1.set('今日订阅:')
         self.label_text2.set('/'+str(self.goal))
 
+
+    def play_sound(self):
+        winsound.PlaySound('doorbell.wav',winsound.SND_FILENAME)
 
     def refresh(self,event):
         t = threading.Thread(target=self.print_fans)
