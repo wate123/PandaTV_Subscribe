@@ -11,13 +11,13 @@ class MainDisplay:
             time = 刷新时间 （分钟）'''
         self.goal = goal
         self.time_in_seconds = time*60
-        self.today_maximum = 0 # 今日最高订阅数
+        self.today_maximum = -1 # 今日最高订阅数
         self.c = Crawl(goal)      # 初始化Crawler
         # 设置GUI界面
         self.root = Tk()
 
         ###########################     设置初始windows位置 ##################
-        self.root.geometry('360x37+21+733')         # 长 X  宽  + 向右平移 + 向下平移
+        self.root.geometry('340x37+21+733')         # 长 X  宽  + 向右平移 + 向下平移
         #####################################################################
 
         self.root.title('就是要莽')
@@ -34,9 +34,9 @@ class MainDisplay:
         self.label_text2.set('/'+str(self.goal))
         objective_label = Label(left_frame,textvariable=self.label_text2,font="28")
         objective_label.grid(row=0,column=2,sticky='w')
-        left_frame.columnconfigure(0,weight=4)     # 调整widget位置
-        left_frame.columnconfigure(1,weight=2)
-        left_frame.columnconfigure(2,weight=2)
+        # left_frame.columnconfigure(0,weight=4)     # 调整widget位置
+        # left_frame.columnconfigure(1,weight=2)
+        # left_frame.columnconfigure(2,weight=2)
 
         right_frame = Frame(self.root)  # 右边frame用于手动获取最新订阅量和当前订阅人数
         right_frame.grid(row=0,column=1)
@@ -49,7 +49,8 @@ class MainDisplay:
         fans_button.grid(row=0,column=1,sticky=("N", "S", "E", "W"),padx=4,pady=4)
         right_frame.columnconfigure(0,weight=1)
         right_frame.columnconfigure(1,weight=1)
-        self.root.columnconfigure(0,minsize=187)   # 调整widget位置
+        self.root.columnconfigure(0,minsize=50)
+        self.root.columnconfigure(1,weight=1)   # 调整widget位置
 
         t = threading.Thread(target=self.start_crawl)   # 开始运行
         t.daemon = True
@@ -67,7 +68,7 @@ class MainDisplay:
 
 
     def play_sound(self):
-        winsound.PlaySound('doorbell.wav',winsound.SND_FILENAME)
+        winsound.PlaySound('doorbell.mp3',winsound.SND_FILENAME)
 
     def refresh(self,event):
         t = threading.Thread(target=self.print_fans)
