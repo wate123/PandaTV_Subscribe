@@ -2,7 +2,7 @@ from tkinter import *
 from crawl import Crawl
 import threading
 import time
-import winsound
+from pygame import mixer
 
 class MainDisplay:
 
@@ -15,7 +15,8 @@ class MainDisplay:
         self.c = Crawl(goal)      # 初始化Crawler
         # 设置GUI界面
         self.root = Tk()
-
+        mixer.init()
+        mixer.music.load('doorbell.mp3')
         ###########################     设置初始windows位置 ##################
         self.root.geometry('340x37+21+733')         # 长 X  宽  + 向右平移 + 向下平移
         #####################################################################
@@ -68,7 +69,7 @@ class MainDisplay:
 
 
     def play_sound(self):
-        winsound.PlaySound('doorbell.mp3',winsound.SND_FILENAME)
+        mixer.music.play()
 
     def refresh(self,event):
         t = threading.Thread(target=self.print_fans)
